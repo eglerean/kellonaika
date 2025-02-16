@@ -23,6 +23,14 @@
             font-size: 16px;
             cursor: pointer;
         }
+#background-image {
+    position: absolute;
+    top: 75px; /* Starts 200px from the top */
+    width: 200px; /* Fixed width */
+    z-index: -1; /* Ensures it stays under all other elements */
+    opacity: 0.4; /* Adjust transparency (0 = fully transparent, 1 = fully visible) */
+    pointer-events: none; /* Prevents interactions with the image */
+}
     </style>
 </head>
 <body>
@@ -31,6 +39,7 @@
     <p id="question">Paljonko kello?</p>
     <canvas id="clockCanvas" width="200" height="200"></canvas>
     <div id="options"></div>
+	<img id="background-image" src="mmm.png" alt="Background">
 
     <script src="game.js"></script>
 
