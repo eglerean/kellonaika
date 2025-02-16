@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const clockCanvas = document.getElementById("clockCanvas");
     const ctx = clockCanvas.getContext("2d");
+    clockCanvas.style.border = "none";
+
     const questionText = document.getElementById("question");
     const optionsContainer = document.getElementById("options");
     const emojiContainer = document.createElement("div");
@@ -47,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
         let hourAngle = ((hour % 12) * 30 + (minute / 2)) * (Math.PI / 180) - Math.PI / 2;
         let minuteAngle = (minute * 6) * (Math.PI / 180) - Math.PI / 2;
-        drawHand(50, hourAngle, "black");
+        drawHand(50, hourAngle, "blue");
         drawHand(70, minuteAngle, "red");
     }
 
