@@ -105,6 +105,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    function showEmojis(type, x, y) {
+        let emoji = type === "happy" ? "😀" : "😢";
+        let span = document.createElement("span");
+        span.textContent = emoji;
+        span.style.position = "absolute";
+        span.style.left = x + "px";
+        span.style.top = y + "px";
+        span.style.fontSize = "24px";
+        document.body.appendChild(span);
+        setTimeout(() => span.remove(), 1000);
+    }
+
     function checkAnswer(selected, event) {
         let rect = event.target.getBoundingClientRect();
         let x = rect.left + rect.width / 2;
