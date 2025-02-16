@@ -70,9 +70,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function formatTimeFinnish(hour, minute) {
         if (minute === 0) return `Tasan ${hour}`;
-        if (minute === 30) return `Puoli ${hour + 1}`;
+        if (minute === 30) return `Puoli ${(hour + 1) % 12 || 12}`;
         if (minute < 30) return `${minute} yli ${hour}`;
-        return `${60 - minute} vaille ${hour + 1}`;
+        return `${60 - minute} vaille ${(hour + 1) % 12 || 12}`;
     }
 
     function generateQuestion() {
@@ -107,14 +107,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showEmojis(type, x, y) {
         let emoji = type === "happy" ? "😀" : "😢";
-        let span = document.createElement("span");
-        span.textContent = emoji;
-        span.style.position = "absolute";
-        span.style.left = x + "px";
-        span.style.top = y + "px";
-        span.style.fontSize = "24px";
-        document.body.appendChild(span);
-        setTimeout(() => span.remove(), 1000);
+        for (let i = 0; i < 20; i++) {
+            let span = document.createElement("span");
+            span.textContent = emoji;
+            span.style.position = "absolute";
+            span.style.left = x + "px";
+            span.style.top = y + "px";
+            span.style.fontSize = "24px";
+            span.style.opacity = "1";
+            document.body.appendChild(span);
+            
+            let animation = span.animate([
+                { transform: "translate(0, 0) scale(1)", opacity: 1 },
+                { transform: `translate(${(Math.random() - 0.5) * 200}px, ${(Math.random() - 1) * 200}px) scale(1.5)`, opacity: 0 }
+            ], {
+                duration: 1000,
+                easing: "ease-out"
+            });
+            
+            animation.onfinish = () => span.remove();
+        }
     }
 
     function checkAnswer(selected, event) {
