@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     imageOverlay.style.width = "200px";
     imageOverlay.style.height = "200px";
     imageOverlay.style.left = "50%";
-    imageOverlay.style.top = "135px";
+    imageOverlay.style.top = "137px";
     imageOverlay.style.transform = "translateX(-50%)";
     
     let correctAnswer = "";
