@@ -7,8 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const optionsContainer = document.getElementById("options");
     const emojiContainer = document.createElement("div");
     const imageOverlay = document.createElement("img");
+    const scoreText = document.createElement("p");
+    const maxScoreText = document.createElement("p");
     document.body.appendChild(emojiContainer);
     document.body.appendChild(imageOverlay);
+    document.body.appendChild(scoreText);
+    document.body.appendChild(maxScoreText);
     
     emojiContainer.style.position = "absolute";
     emojiContainer.style.width = "100%";
@@ -22,13 +26,24 @@ document.addEventListener("DOMContentLoaded", function () {
     imageOverlay.style.top = "137px";
     imageOverlay.style.transform = "translateX(-50%)";
     
+    scoreText.style.fontSize = "20px";
+    scoreText.style.fontWeight = "bold";
+    scoreText.textContent = "Pisteet: 0";
+    
+    maxScoreText.style.fontSize = "20px";
+    maxScoreText.style.fontWeight = "bold";
+    maxScoreText.textContent = "Ennätys: 0";
+
     let correctAnswer = "";
+    let score = 0;
+    let maxScore = 0;
     const happyImages = ["happy1.jpg", "happy2.jpg", "happy3.jpg", "happy4.jpg", "happy5.png"];
 
     function drawClock(hour, minute) {
         ctx.clearRect(0, 0, clockCanvas.width, clockCanvas.height);
         ctx.beginPath();
         ctx.arc(100, 100, 80, 0, 2 * Math.PI);
+        ctx.strokeStyle = "black";
         ctx.stroke();
         
         for (let i = 1; i <= 12; i++) {
@@ -90,43 +105,26 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function showEmojis(type, x, y) {
-        let emoji = type === "happy" ? "😀" : "😢";
-        for (let i = 0; i < 20; i++) {
-            let span = document.createElement("span");
-            span.textContent = emoji;
-            span.style.position = "absolute";
-            span.style.left = x + "px";
-            span.style.top = y + "px";
-            span.style.fontSize = "24px";
-            span.style.opacity = "1";
-            document.body.appendChild(span);
-            
-            let animation = span.animate([
-                { transform: "translate(0, 0) scale(1)", opacity: 1 },
-                { transform: `translate(${(Math.random() - 0.5) * 200}px, ${(Math.random() - 1) * 200}px) scale(1.5)`, opacity: 0 }
-            ], {
-                duration: 1000,
-                easing: "ease-out"
-            });
-            
-            animation.onfinish = () => span.remove();
-        }
-    }
-
     function checkAnswer(selected, event) {
         let rect = event.target.getBoundingClientRect();
         let x = rect.left + rect.width / 2;
         let y = rect.top;
         
         if (selected === correctAnswer) {
+            score++;
+            if (score > maxScore) {
+                maxScore = score;
+                maxScoreText.textContent = `Ennätys: ${maxScore}`;
+            }
             imageOverlay.src = happyImages[Math.floor(Math.random() * happyImages.length)];
             showEmojis("happy", x, y);
         } else {
+            score--;
             imageOverlay.src = "sad.jpg";
             showEmojis("sad", x, y);
         }
         
+        scoreText.textContent = `Pisteet: ${score}`;
         imageOverlay.style.display = "block";
         setTimeout(() => {
             imageOverlay.style.display = "none";
@@ -136,4 +134,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
     generateQuestion();
 });
-
