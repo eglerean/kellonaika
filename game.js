@@ -64,8 +64,8 @@ document.addEventListener("DOMContentLoaded", function () {
         
         let hourAngle = ((hour % 12) * 30 + (minute / 2)) * (Math.PI / 180) - Math.PI / 2;
         let minuteAngle = (minute * 6) * (Math.PI / 180) - Math.PI / 2;
-        drawHand(50, hourAngle, "blue");
-        drawHand(70, minuteAngle, "red");
+        drawHand(50, hourAngle, "red");
+        drawHand(70, minuteAngle, "blue");
     }
 
     function formatTimeFinnish(hour, minute) {
